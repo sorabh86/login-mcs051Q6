@@ -19,9 +19,25 @@
                 <h1>Give Feedback on following Product</h1>
                 <div class="product-list">
                     <div class="product">
-                        <h3>Product</h3>
-                        <p>Description of product</p>
-                        <button class="btn">feedback</button>
+                        <h3>Product 1</h3>
+                        <p>Description of product 1</p>
+                        <form action="site" method="post">
+                            <input type="hidden" name="action" value="dofeedback">
+                            <% String error = (String)request.getAttribute("error");
+                            if(error != null) {%>
+                                <p class="error"><%= error %></p>
+                            <% } 
+                            String success = (String)request.getAttribute("success");
+                            if(success != null) { %>
+                                <p class="success"><%= success %></p>
+                            <% } %>
+                            <div class="form-group">
+                                <label>Your Feedback :</label>
+                                <textarea name="feedback" class="form-control" rows="5" placeholder="Write your feedback here"></textarea>
+                            </div>
+                            <button class="btn" type="submit">submit</button>
+                            
+                        </form>
                     </div>
                     
                 </div>

@@ -57,7 +57,7 @@ public class User {
             return false;
         }
         
-        if(!email.matches("\\w+@\\w+\\.\\w+")) {
+        if(!email.matches("^([a-zA-z0-9\\_\\.]+)@([a-zA-Z0-9\\-\\.]+)\\.([a-zA-Z]{2,5})$")) {
             message = "Invalid Email address.";
             return false;
         }
