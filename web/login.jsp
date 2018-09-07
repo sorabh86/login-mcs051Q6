@@ -16,7 +16,6 @@
             html,body{background:#f1f1f1;font-family:monospace;font-size:15px;}
             form{width:340px;margin:30px auto;background:#ddd;padding:20px;border-radius:8px;}
             form h1{margin:0 0 20px;padding-bottom:10px;border-bottom:1px solid #fff;}
-            .form-group{margin-bottom:20px;}
             label,input{display:inline-block;box-sizing:border-box;padding:5px}
             label{width:100px;text-align:right;}
             input[type=text],input[type=password]{width:220px;}
