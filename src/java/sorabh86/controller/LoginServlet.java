@@ -30,6 +30,8 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         } else if (action.matches("login")) {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
+        } else if (action.matches("products")) {
+            request.getRequestDispatcher("/products.jsp").forward(request, response);
         }
         
     }
