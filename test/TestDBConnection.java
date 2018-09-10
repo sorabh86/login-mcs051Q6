@@ -1,5 +1,4 @@
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,6 +35,8 @@ public class TestDBConnection {
 
                         System.out.println("set: id="+id+", username="+username+", password="+password);
                     }
+                    
+                    rs.close();
                 }
                 
                 DBConnect.disconnect();

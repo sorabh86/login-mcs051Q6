@@ -6,13 +6,15 @@
 package sorabh86.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sorabh86.beans.User;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,6 +45,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
 
         String action = request.getParameter("action");
 
@@ -54,15 +58,46 @@ public class LoginServlet extends HttpServlet {
 
             request.setAttribute("email", email);
 
-            User user = new User(email, password);
+//            User user = new User(email, password);
 
-            if(user.validate()) {
-                request.getRequestDispatcher("/products.jsp").forward(request, response);
-            } else {
-                request.setAttribute("errormessage", user.getMessage());
+//            if(user.validate()) {
+                
+                if(DBConnect.connect()) {
 
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
-            }
+                    try {
+                        String sql = "SELECT count(*) as count FROM users WHERE username=? AND password=?";
+                        PreparedStatement stmt = DBConnect.getConnection().prepareStatement(sql);
+                        
+                        stmt.setString(1, email);
+                        stmt.setString(2, password);
+                        
+                        ResultSet rs = stmt.executeQuery();
+                        
+                        if(rs.next()) {
+                            request.getRequestDispatcher("/products.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("errormessage", "No User and Password Found");
+
+                            request.getRequestDispatcher("/login.jsp").forward(request, response);
+                        }
+                        
+                        DBConnect.disconnect();
+                    } catch (SQLException ex) {
+                        request.setAttribute("errormessage", ex.getMessage());
+
+                        request.getRequestDispatcher("/login.jsp").forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("errormessage", "could not connect to server");
+
+                    request.getRequestDispatcher("/login.jsp").forward(request, response);
+                }
+                
+//            } else {
+//                request.setAttribute("errormessage", user.getMessage());
+//
+//                request.getRequestDispatcher("/login.jsp").forward(request, response);
+//            }
         } else if(action.equals("dofeedback")) {
             String feedback = request.getParameter("feedback");
             

@@ -5,6 +5,12 @@
  */
 package sorabh86.beans;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sorabh86.controller.DBConnect;
+
 /**
  *
  * @author Sorabh86 <ssorabh.ssharma@gmail.com>

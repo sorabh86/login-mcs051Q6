@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body class="fullheight">
-        <%@include file="templates/navigation.html" %>
+        <%@include file="/templates/navigation.html" %>
         <div class="container">
             <div class="content">
                 <h1>Give Feedback on following Product</h1>
