@@ -17,6 +17,13 @@ import java.util.logging.Logger;
  */
 public class DBConnect {
     
+//    private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+//    private static final String DB = "jdbc:mysql://localhost:3306/webjsp";
+//    private static final String USR = "root";
+//    private static final String PASS = "root";
+    
+    private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+    private static final String DB = "jdbc:oracle:thin:@localhost:1521:XE";
     private static final String USR = "HR";
     private static final String PASS = "hr";
     
@@ -24,14 +31,14 @@ public class DBConnect {
     
     public static boolean connect() {
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName(DRIVER);
         } catch (ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
             return false;
         }
         
         try {
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", USR, PASS);
+            conn = DriverManager.getConnection(DB, USR, PASS);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;

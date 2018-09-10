@@ -2,6 +2,7 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import sorabh86.controller.DBConnect;
 
 /*
@@ -19,25 +20,31 @@ public class TestDBConnection {
     public static void main(String[] args) {
         System.out.println("running...");
         
-        PreparedStatement smt;
+        Statement smt;
+        
         if(DBConnect.connect()) {
-            System.out.println("pass connection...");
             try {
-                smt = DBConnect.getConnection().prepareStatement("SELECT * FROM users");
+                smt = DBConnect.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                System.out.println("connected...");
                 
-                ResultSet result = smt.executeQuery();
+                try (ResultSet rs = smt.executeQuery("select * from users")) {
+                    
+                    while(rs.next()) {
+                        int id = rs.getInt("id");
+                        String username = rs.getString("username");
+                        String password = rs.getString("password");
+
+                        System.out.println("set: id="+id+", username="+username+", password="+password);
+                    }
+                }
                 
-                System.out.println("result: "+result.next());
-                
+                DBConnect.disconnect();
+                System.out.println("disconnected...");
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
         } else {
             System.out.println("Database is Connected!!");
         }
-        
-        
-        
-        DBConnect.disconnect();
     }
 }
